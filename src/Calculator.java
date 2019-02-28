@@ -51,17 +51,7 @@ public class Calculator {
 			System.out.println("btn di click");
 //			JOptionPane.showMessageDialog(null, "Click " + 
 //					sourceButton.getText());
-			if(sourceButton.getText().equals("1") || 
-					sourceButton.getText().equals("2") ||
-					sourceButton.getText().equals("3") ||
-					sourceButton.getText().equals("4") ||
-					sourceButton.getText().equals("5") ||
-					sourceButton.getText().equals("6") ||
-					sourceButton.getText().equals("7") ||
-					sourceButton.getText().equals("8") ||
-					sourceButton.getText().equals("9") ||
-					sourceButton.getText().equals("0") ||
-					sourceButton.getText().equals(".")){
+			if(isOperand(sourceButton)){
 				if(display.getText().equals("0") && 
 						sourceButton.getText().equals(".") == false){
 					display.setText(sourceButton.getText());
@@ -71,13 +61,13 @@ public class Calculator {
 							sourceButton.getText());
 				}
 			}else if(sourceButton.getText().equals("%")){
-				double temp = Double.valueOf(display.getText());
+				double temp = getDisplayValue();
 				display.setText("" + (temp/100));
 			}else if(sourceButton.getText().equals("sqrt")){
-				double temp = Double.valueOf(display.getText());
+				double temp = getDisplayValue();
 				display.setText("" + Math.sqrt(temp));
 			}else if(sourceButton.getText().equals("x^2")){
-				double temp = Double.valueOf(display.getText());
+				double temp = getDisplayValue();
 				display.setText("" + (temp * temp));
 			}else if(sourceButton.getText().equals("÷") || 
 					sourceButton.getText().equals("x") ||
@@ -87,18 +77,7 @@ public class Calculator {
 				operator = sourceButton.getText();
 				display.setText("0");
 			}else if(sourceButton.getText().equals("=")){
-				double temp = Double.valueOf(display.getText());
-				double result = 0;
-				if(operator.equals("+")){
-					result = old + temp;
-				}else if(operator.equals("-")){
-					result = old - temp;
-				}else if(operator.equals("x")){
-					result = old * temp;
-				}else if(operator.equals("÷")){
-					result = old / temp;
-				}
-				display.setText("" + result);
+				doOperation();
 			}else if(sourceButton.getText().equals("AC")){
 				display.setText("0");
 				old = 0;
@@ -132,6 +111,42 @@ public class Calculator {
 
 	public static void main(String[] args) {
 		new Calculator();
+	}
+
+
+	private void doOperation() {
+		double temp = getDisplayValue();
+		double result = 0;
+		if(operator.equals("+")){
+			result = old + temp;
+		}else if(operator.equals("-")){
+			result = old - temp;
+		}else if(operator.equals("x")){
+			result = old * temp;
+		}else if(operator.equals("÷")){
+			result = old / temp;
+		}
+		display.setText("" + result);
+	}
+
+
+	private double getDisplayValue() {
+		return Double.valueOf(display.getText());
+	}
+
+
+	private boolean isOperand(JButton sourceButton) {
+		return sourceButton.getText().equals("1") || 
+				sourceButton.getText().equals("2") ||
+				sourceButton.getText().equals("3") ||
+				sourceButton.getText().equals("4") ||
+				sourceButton.getText().equals("5") ||
+				sourceButton.getText().equals("6") ||
+				sourceButton.getText().equals("7") ||
+				sourceButton.getText().equals("8") ||
+				sourceButton.getText().equals("9") ||
+				sourceButton.getText().equals("0") ||
+				sourceButton.getText().equals(".");
 	}
 
 }
